@@ -9,8 +9,8 @@ from . import models
 class WomenSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = models.Women
-		# fields = ('title', 'content', 'category')
-		fields = ('__all__')
+		fields = ('id','title', 'content', 'category')
+		# fields = ('__all__')
 
 # class WomenModel:
 # 	'''

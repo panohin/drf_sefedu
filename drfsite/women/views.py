@@ -1,12 +1,29 @@
 from django.shortcuts import render
 from django.forms import model_to_dict
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView, UpdateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
 from . import models
 from .serializers import WomenSerializer
 
+
+class WomenViewSet(viewsets.ModelViewSet):
+	queryset = models.Women.objects.all()
+	serializer_class = WomenSerializer
+
+class WomenAPIDetailView(RetrieveUpdateDestroyAPIView):
+	queryset = models.Women
+	serializer_class = WomenSerializer
+
+class WomenAPIList(ListCreateAPIView):
+	queryset = models.Women.objects.all()
+	serializer_class = WomenSerializer
+
+class WomenAPIUpdate(UpdateAPIView):
+	queryset = models.Women.objects.all()
+	serializer_class = WomenSerializer
 
 class WomenAPIView(APIView):
 	def get(self, request):
@@ -27,14 +44,14 @@ class WomenAPIView(APIView):
 		return Response({'post': serializer.data})
 
 	def put(self, request, *args, **kwargs):
-		pk = kwargs.get('pk', None)
+		pk = kwargs.get("pk", None)
 		if not pk:
 			return Response({'error':'Method PUT not allowed'})
 		try:
 			instance = models.Women.objects.get(pk=pk)
 		except:
 			return Response({'error':'Object does not exist'})
-		serializer = WomenSerializer(request.data, instatce=instance)
+		serializer = WomenSerializer(data=request.data, instance=instance)
 		serializer.is_valid(raise_exception=True)
 		serializer.save()
 		return Response({'post': serializer.data})
