@@ -6,11 +6,13 @@ from women.views import WomenAPIView, WomenAPIUpdate, WomenAPIList, WomenAPIDeta
 
 
 router = routers.SimpleRouter()
-router.register('women', WomenViewSet)
+router2 = routers.DefaultRouter()
+# router.register('women', WomenViewSet)
+router2.register('women', WomenViewSet, basename='women')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include(router.urls)),
+    path('api/v1/', include(router2.urls)),
     # path('api/v1/womenlist', WomenViewSet.as_view({'get':'list'})),
     # path('api/v1/womenlist/<int:pk>', WomenViewSet.as_view({'put':'update', 'get':'retrieve'}), name='update_url'),
 ]

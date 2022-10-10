@@ -4,14 +4,27 @@ from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView, UpdateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from . import models
 from .serializers import WomenSerializer
 
 
 class WomenViewSet(viewsets.ModelViewSet):
-	queryset = models.Women.objects.all()
+	# queryset = models.Women.objects.all()
 	serializer_class = WomenSerializer
+
+	def get_queryset(self):
+		pk = self.kwargs.get('pk')
+		if not pk:
+			return models.Women.objects.all()
+		else:
+			return models.Women.objects.filter(pk=pk)
+
+	@action(methods=['get'], detail=True)
+	def get_category(self, request, pk=None):
+		category = models.Category.objects.get(pk=pk)
+		return Response({'category': category.name})
 
 class WomenAPIDetailView(RetrieveUpdateDestroyAPIView):
 	queryset = models.Women
