@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Women(models.Model):
 	title = models.CharField('Загловок', max_length=50)
@@ -8,6 +9,7 @@ class Women(models.Model):
 	time_update = models.DateTimeField('Изменен', auto_now=True)
 	is_published = models.BooleanField('Опубликовано', default=True)
 	category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория')
+	user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.title
