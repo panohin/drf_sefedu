@@ -13,6 +13,7 @@ from women import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/women/', views.WomenAPIList.as_view()),
+    path('api/v1/drf-auth/', include('rest_framework.urls')),
     path('api/v1/women/<int:pk>', views.WomenAPIUpdate.as_view()),
     path('api/v1/women/delete/<int:pk>', views.WomenAPIDestroy.as_view()),
     # path('api/v1/womenlist', WomenViewSet.as_view({'get':'list'})),
