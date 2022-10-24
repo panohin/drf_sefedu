@@ -6,16 +6,23 @@ from rest_framework.generics import ListCreateAPIView, UpdateAPIView, RetrieveUp
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
+from rest_framework.pagination import PageNumberPagination
 
 from . import models
 from .serializers import WomenSerializer
 from .permissions import UserGetAdminUpdatePermission, IsOwnerOrReadOnly
 
 
+class CustomSetPagination(PageNumberPagination):
+    page_size = 1
+    page_size_query_param = 'page_size'
+    max_page_size = 10000
+
 class WomenAPIList(generics.ListCreateAPIView):
 	queryset = models.Women.objects.all()
 	serializer_class = WomenSerializer
 	permission_classes = (IsAuthenticatedOrReadOnly, )
+	pagination_class = CustomSetPagination
 
 class WomenAPIUpdate(generics.RetrieveUpdateAPIView):
 	queryset = models.Women.objects.all()
