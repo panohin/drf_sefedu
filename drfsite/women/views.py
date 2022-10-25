@@ -22,7 +22,7 @@ class WomenAPIList(generics.ListCreateAPIView):
 	queryset = models.Women.objects.all()
 	serializer_class = WomenSerializer
 	permission_classes = (IsAuthenticatedOrReadOnly, )
-	pagination_class = CustomSetPagination
+	# pagination_class = CustomSetPagination
 
 class WomenAPIUpdate(generics.RetrieveUpdateAPIView):
 	queryset = models.Women.objects.all()
